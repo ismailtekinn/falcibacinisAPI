@@ -1,42 +1,30 @@
 import { PrismaClient } from "@prisma/client";
-const data = require("./data/ililcemahalle");
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Seed başlıyor...");
+  console.log("Seed başlıyor...");
 
-  for (const il of data) {
-    const ilId = parseInt(il.alpha_2_code.split("-")[1]);
+  await prisma.role.upsert({
+    where: { Name: "user" },
+    update: {},
+    create: { Name: "user" },
+  });
 
-    await prisma.il.create({
-      data: {
-        IlId: ilId,
-        IlAdi: il.name,
-        Ilceler: {
-          create: il.towns.map((ilce: { name: string; districts: any[] }) => ({
-            IlceAdi: ilce.name,
-            Mahalleler: {
-              create: ilce.districts.flatMap((district: { quarters: any[] }) =>
-                district.quarters.map((mahalle: { name: string }) => ({
-                  MahalleAdi: mahalle.name,
-                }))
-              ),
-            },
-          })),
-        },
-      },
-    });
+  await prisma.role.upsert({
+    where: { Name: "admin" },
+    update: {},
+    create: { Name: "admin" },
+  });
 
-    process.stdout.write(`\r  ⏳ ${il.name} eklendi...`);
-  }
-
-  console.log("\n✅ Seed tamamlandı!");
+  console.log("Seed tamamlandı.");
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
+  .catch((error) => {
+    console.error(error);
     process.exit(1);
   })
-  .finally(() => prisma.$disconnect());
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

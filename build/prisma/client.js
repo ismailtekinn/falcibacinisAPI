@@ -1,12 +1,8 @@
 "use strict";
-var _a;
-Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-var */
-const client_1 = require("@prisma/client");
-const prismaClientSingleton = () => {
-    return new client_1.PrismaClient();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const prisma = (_a = globalThis.prisma) !== null && _a !== void 0 ? _a : prismaClientSingleton();
-exports.default = prisma;
-if (process.env.NODE_ENV !== "production")
-    globalThis.prisma = prisma;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = void 0;
+var client_1 = require("../src/infrastructure/database/prisma/client");
+Object.defineProperty(exports, "default", { enumerable: true, get: function () { return __importDefault(client_1).default; } });

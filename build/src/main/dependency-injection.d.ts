@@ -1,0 +1,31 @@
+import { IUserRepository } from "../domain/repositories/IUserRepository";
+import { IRoleRepository } from "../domain/repositories/IRoleRepository";
+import { IUnitOfWork } from "../application/interfaces/IUnitOfWork";
+import { IHasher } from "../application/interfaces/IHasher";
+import { ITokenService } from "../application/interfaces/ITokenService";
+import { CreateUserUseCase } from "../application/use-cases/user/CreateUserUseCase";
+import { UpdateUserUseCase } from "../application/use-cases/user/UpdateUserUseCase";
+import { DeleteUserUseCase } from "../application/use-cases/user/DeleteUserUseCase";
+import { GetUserByIdUseCase } from "../application/use-cases/user/GetUserByIdUseCase";
+import { LoginUseCase } from "../application/use-cases/auth/LoginUseCase";
+import { UserController } from "../presentation/controllers/UserController";
+import { AuthController } from "../presentation/controllers/AuthController";
+export declare class Container {
+    private static instance;
+    readonly prisma: import(".prisma/client").PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    readonly userRepository: IUserRepository;
+    readonly roleRepository: IRoleRepository;
+    readonly unitOfWork: IUnitOfWork;
+    readonly hasher: IHasher;
+    readonly tokenService: ITokenService;
+    readonly createUserUseCase: CreateUserUseCase;
+    readonly updateUserUseCase: UpdateUserUseCase;
+    readonly deleteUserUseCase: DeleteUserUseCase;
+    readonly getUserByIdUseCase: GetUserByIdUseCase;
+    readonly loginUseCase: LoginUseCase;
+    readonly userController: UserController;
+    readonly authController: AuthController;
+    private constructor();
+    static getInstance(): Container;
+}
+export declare const container: Container;
